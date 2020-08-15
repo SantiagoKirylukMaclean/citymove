@@ -6,7 +6,7 @@ build:
 	@gradlew.bat build --warning-mode all
 
 test:
-	@gradlew.bat --warning-mode all
+	@gradlew.bat test --warning-mode all
 
 run:
 	@gradlew.bat :run
