@@ -1,4 +1,10 @@
 rootProject.name = 'citymove'
 
+include ':shared'
+project(':shared').projectDir = new File('src/shared')
+
 include ':backoffice'
 project(':backoffice').projectDir = new File('src/backoffice')
+
+include ':rental'
+project(':rental').projectDir = new File('src/rental')

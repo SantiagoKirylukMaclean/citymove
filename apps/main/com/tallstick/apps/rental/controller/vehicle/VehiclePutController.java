@@ -1,5 +1,6 @@
 package com.tallstick.apps.rental.controller.vehicle;
 
+import com.tallstick.rental.vehicle.application.create.VehicleCreator;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public final class VehiclePutController {
 
+    private VehicleCreator vehicleCreator;
+    public VehiclePutController(VehicleCreator vehicleCreator) {
+        this.vehicleCreator = vehicleCreator;
+    }
+
     @PutMapping("/vehicle/{id}")
     public ResponseEntity create(@PathVariable String id, @RequestBody Request request){
+        vehicleCreator.create(id, request.name());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
