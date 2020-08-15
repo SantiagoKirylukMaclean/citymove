@@ -1,24 +1,120 @@
-plugins {
-	id 'org.springframework.boot' version '2.3.3.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
-}
+// Common for all projects
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
 
-group = 'com.tallstick'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
 
-repositories {
-	mavenCentral()
-}
+	repositories {
+		mavenCentral()
+	}
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	dependencies {
+		// Prod
+		implementation 'org.apache.logging.log4j:log4j-core:2.12.1'
+		implementation 'com.vlkan.log4j2:log4j2-logstash-layout:0.21'
+		// Test
+		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+		testImplementation 'org.mockito:mockito-core:2.+'
+		testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+	}
+
+	task view_paths {
+		doLast { task ->
+			println "$task.project.name"
+			println "------------------"
+			println "Main: $sourceSets.main.java.srcDirTrees"
+			println "   Resources: $sourceSets.main.resources.srcDirTrees"
+			println "Tests: $sourceSets.test.java.srcDirTrees"
+			println "   Resources: $sourceSets.test.resources.srcDirTrees"
+		}
+	}
+
+	test {
+		useJUnitPlatform()
+
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
 	}
 }
 
-test {
-	useJUnitPlatform()
+// All subprojects (located in src/*)
+subprojects {
+	group = "com.tallstick.${rootProject.name}"
+
+	sourceSets {
+		main {
+			java { srcDirs = ['main'] }
+			resources { srcDirs = ['main/resources'] }
+		}
+
+		test {
+			java { srcDirs = ['test'] }
+			resources { srcDirs = ['test/resources'] }
+		}
+	}
+
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = true
+	}
 }
+
+// Main project (located in apps/)
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath('org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE')
+	}
+}
+
+sourceSets {
+	main {
+		java { srcDirs = ['apps/main'] }
+		resources { srcDirs = ['apps/main/resources'] }
+	}
+
+	test {
+		java { srcDirs = ['apps/test'] }
+		resources { srcDirs = ['apps/test/resources'] }
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
+
+	testImplementation rootProject.sourceSets.main.output
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.1.RELEASE'
+
+}
+
+// Bild completo de aplication
+apply plugin: 'application'
+
+bootJar {
+	baseName = 'cityMove'
+	version = '0.0.1'
+}
+
+
+mainClassName = 'com.tallstick.apps.Starter'
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
+
+	//implementation project(":shared")
+	implementation project(":backoffice")
+	//implementation project(":mooc")
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.8.RELEASE'
+	//testImplementation project(":shared").sourceSets.test.output
+}
+

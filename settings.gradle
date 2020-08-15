@@ -1,1 +1,4 @@
 rootProject.name = 'citymove'
+
+include ':backoffice'
+project(':backoffice').projectDir = new File('src/backoffice')
