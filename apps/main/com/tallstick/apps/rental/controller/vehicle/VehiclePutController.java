@@ -1,7 +1,6 @@
 package com.tallstick.apps.rental.controller.vehicle;
 
 import com.tallstick.rental.vehicle.application.create.VehicleCreator;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public final class VehiclePutController {
 
     private VehicleCreator vehicleCreator;
+
     public VehiclePutController(VehicleCreator vehicleCreator) {
         this.vehicleCreator = vehicleCreator;
     }

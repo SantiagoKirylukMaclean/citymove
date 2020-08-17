@@ -4,7 +4,6 @@ import com.tallstick.rental.vehicle.domain.Vehicle;
 import com.tallstick.rental.vehicle.domain.VehicleRepository;
 import com.tallstick.shared.domain.Service;
 
-
 @Service
 public final class VehicleCreator {
     private VehicleRepository vehicleRepository;

@@ -17,7 +17,7 @@ final class VehicleCreatorTest {
 
         Vehicle vehicle = new Vehicle("oneId","oneName");
 
-        vehicleCreator.create(vehicle.getId(),vehicle.getName());
+        vehicleCreator.create(vehicle.id(),vehicle.name());
 
         verify(vehicleRepository,atLeastOnce()).save(vehicle);
     }

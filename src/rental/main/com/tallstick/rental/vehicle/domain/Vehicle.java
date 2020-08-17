@@ -11,11 +11,11 @@ public class Vehicle {
         this.name = name;
     }
 
-    public String getId() {
+    public String id() {
         return id;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
