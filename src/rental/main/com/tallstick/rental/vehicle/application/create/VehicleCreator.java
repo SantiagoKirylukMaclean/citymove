@@ -12,9 +12,9 @@ public final class VehicleCreator {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public void create(String id, String name){
+    public void create(VehicleCreatorRequest request){
 
-        Vehicle vehicle = new Vehicle(id,name);
+        Vehicle vehicle = new Vehicle(request.id(), request.name());
 
         vehicleRepository.save(vehicle);
     }
