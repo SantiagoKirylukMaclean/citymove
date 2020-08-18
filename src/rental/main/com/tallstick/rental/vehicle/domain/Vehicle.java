@@ -3,20 +3,21 @@ package com.tallstick.rental.vehicle.domain;
 import java.util.Objects;
 
 public class Vehicle {
-    private String id;
-    private String name;
+    private final VehicleId id;
+    private final VehicleName vehicleName;
 
-    public Vehicle(String id, String name) {
+
+    public Vehicle(VehicleId id, VehicleName vehicleName) {
         this.id = id;
-        this.name = name;
+        this.vehicleName = vehicleName;
     }
 
-    public String id() {
+    public VehicleId id() {
         return id;
     }
 
-    public String name() {
-        return name;
+    public VehicleName name() {
+        return vehicleName;
     }
 
     @Override
@@ -24,12 +25,12 @@ public class Vehicle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vehicle vehicle = (Vehicle) o;
-        return Objects.equals(id, vehicle.id) &&
-                Objects.equals(name, vehicle.name);
+        return id.equals(vehicle.id) &&
+                vehicleName.equals(vehicle.vehicleName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, vehicleName);
     }
 }

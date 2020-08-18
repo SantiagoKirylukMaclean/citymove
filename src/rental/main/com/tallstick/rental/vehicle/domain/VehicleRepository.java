@@ -5,6 +5,6 @@ import java.util.Optional;
 public interface VehicleRepository {
     void save(Vehicle vehicle);
 
-    Optional<Vehicle> search(String id);
+    Optional<Vehicle> search(VehicleId id);
 
 }
