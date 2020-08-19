@@ -15,7 +15,7 @@ public abstract class UuidIdentifier {
         UUID.fromString(value);
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 

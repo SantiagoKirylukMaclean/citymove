@@ -1,8 +1,8 @@
 package com.tallstick.rental.vehicle.application.create;
 
+
+import com.tallstick.rental.vehicle.domain.VehicleMother;
 import com.tallstick.rental.vehicle.domain.Vehicle;
-import com.tallstick.rental.vehicle.domain.VehicleId;
-import com.tallstick.rental.vehicle.domain.VehicleName;
 import com.tallstick.rental.vehicle.domain.VehicleRepository;
 import org.junit.jupiter.api.Test;
 
@@ -13,19 +13,13 @@ import static org.mockito.Mockito.verify;
 
 final class VehicleCreatorTest {
     @Test
-    void saveValidVehicle() throws Exception{
+    void saveValidVehicle(){
         VehicleRepository vehicleRepository = mock(VehicleRepository.class);
         VehicleCreator vehicleCreator = new VehicleCreator(vehicleRepository);
 
-        VehicleCreatorRequest vehicleCreatorRequest = new VehicleCreatorRequest(
-                "f0dc432f-5335-4b71-a883-bbd3959eb480",
-                "OneName"
-        );
+        VehicleCreatorRequest vehicleCreatorRequest = VehicleCreatorRequestMother.random();
 
-        Vehicle vehicle = new Vehicle(
-                new VehicleId(vehicleCreatorRequest.id()),
-                new VehicleName(vehicleCreatorRequest.name())
-        );
+        Vehicle vehicle = VehicleMother.fromRequest(vehicleCreatorRequest);
 
         vehicleCreator.create(vehicleCreatorRequest);
 
